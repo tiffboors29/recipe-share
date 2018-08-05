@@ -3,7 +3,7 @@ This is a simple Recipe Sharing App built with the MERN ([MongoDB](https://www.m
 User account access and authentication services are provided through [Auth0](https://auth0.com) integration.
 
 ## Frontend
-In Progress...
+The client uses [React](https://reactjs.org/) and was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). It uses [ESLint](https://eslint.org/) for linting, [Babel](https://babeljs.io/) as a JavaScript transpiler. For routing, [React Router](https://github.com/ReactTraining/react-router) is used.
 
 ## Backend
 The server utilizes Express framework and MongoDB for data storage. [Body Parser](https://github.com/expressjs/body-parser#readme) is used as a helper in parsing network requests and [Morgan](https://github.com/expressjs/morgan) is HTTP request middleware used for logging/debugging those requests. [Mongoose](http://mongoosejs.com/) is used for MongoDB interaction. [Nodemon](https://github.com/remy/nodemon) is used to monitor and restart the server as changes are made.
