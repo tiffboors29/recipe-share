@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
+import { nav } from './nav';
+import { Header } from './Header';
+import { Footer } from './Footer';
+
+const iconCredit = (<div className="icon-credit">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>);
 
 const Recipes = () => (
   <div>
@@ -12,18 +15,27 @@ const Recipes = () => (
 
 class App extends Component {
   render() {
+
+    // TO-DO: handle login (actionBtn)
+
     return (
       <Router>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+        <div className="app">
 
-          <Route exact path="/" component={ Recipes }/>
+          <Header
+            nav={ nav }
+            actionBtn={ { text: 'Login', path: '/' } }
+            title="What's Cookin"
+            />
+
+          <div className="main">
+            <Route exact path="/" component={ Recipes }/>
+          </div>
+
+          <Footer>
+            { iconCredit }
+          </Footer>
+
         </div>
       </Router>
     )

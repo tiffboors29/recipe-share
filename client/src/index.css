@@ -1,5 +1,25 @@
-body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+a {
+  color: #ff778b;
+}
+
+header,
+footer {
+  width: 100%;
+  text-align: center;
+}
+
+footer {
+  padding: 24px;
+}
+
+.brand-logo {
+  max-width: 300px;
+  margin: 0 15px 0 0;
+  content:url(./logo.png);
+}
+
+.main {
+	text-align: center;
+  background: #bbeaf3;
+  padding: 24px;
 }
