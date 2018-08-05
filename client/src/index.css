@@ -8,8 +8,17 @@ footer {
   text-align: center;
 }
 
+header {
+  box-shadow: 0 4px 2px -2px #bbeaf3;
+}
+
+.signin-button {
+  border-color: #ff778b !important;
+}
+
 footer {
-  padding: 24px;
+  padding: 5px !important;
+  background: #bbeaf3 !important;
 }
 
 .brand-logo {
@@ -20,6 +29,54 @@ footer {
 
 .main {
 	text-align: center;
-  background: #bbeaf3;
   padding: 24px;
+}
+
+.text-truncate {
+  text-align: justify;
+}
+
+.recipe {
+  display: inline-block;
+  text-align: justify;
+}
+
+.recipe-info {
+  display: inline-block;
+  float: left;
+  padding-right: 30px;
+}
+
+.recipe-info span {
+  padding-left: 15px;
+}
+
+.recipe-steps {
+  clear: both;
+  padding-top: 15px;
+}
+
+.create-recipe-container {
+  display: inline-block;
+  width: 100%;
+}
+
+.recipe-form-errors {
+  color: #FF3E00;
+}
+
+input[type=file] {
+  line-height: normal;
+  margin-top: 13px;
+}
+
+.list-input {
+  float: left;
+  width: 75%;
+  margin-bottom: 10px;
+}
+
+.list-input-group button {
+  float: right;
+  margin-left: 10px;
 }
