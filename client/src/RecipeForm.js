@@ -41,7 +41,7 @@ const RecipeForm = (props) => {
         </div>
       </div>
       <div className="form-group">
-        <label className="col-xs-3 control-label">Prep Time</label>
+        <label className="col-xs-3 control-label">Prep Time (Minutes)</label>
         <div className="col-xs-9">
           <input
             name="prep"
@@ -52,7 +52,7 @@ const RecipeForm = (props) => {
         </div>
       </div>
       <div className="form-group">
-        <label className="col-xs-3 control-label">Total Time</label>
+        <label className="col-xs-3 control-label">Total Time (Minutes)</label>
         <div className="col-xs-9">
           <input
             name="time"

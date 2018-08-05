@@ -22,19 +22,27 @@ class Recipe extends Component {
 
   render() {
 
-    let recipe = this.state.data;
+    let recipe = this.state.data,
+    base64Data;
     if (!recipe) return null;
 
-    // TO-DO: display image
+    if (recipe.image && recipe.image.data){
+      base64Data = new Buffer(recipe.image.data.data, 'binary').toString('base64');
+    }
 
     return (
       <div className="main-content">
         <div className="recipe">
           <h2>{ recipe.title }</h2>
 
-          <div className="recipe-image">
-            <img src={ recipe.image } />
-          </div>
+          {
+
+            base64Data ? 
+              <div className="recipe-image">
+                <img src={ `data:image/png;base64,${base64Data}` } alt={ recipe.title }/>
+              </div>
+            : null
+          }
 
           <div className="recipe-info">
             <label>Servings:</label><span>{ `${recipe.servings} minutes` }</span>

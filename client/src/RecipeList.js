@@ -35,7 +35,9 @@ const columns = [
 class RecipeList extends Component {
   constructor() {
     super();
-    this.state = {}
+    this.state = {
+      searchFilter: ''
+    }
   }
 
   componentDidMount() {
@@ -55,8 +57,28 @@ class RecipeList extends Component {
       .then(data => data.json())
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
-        else this.setState({ data: res.data });
+        else this.applyFilters(res.data);
       });
+  }
+
+  updateFilter = (e) => {
+    let newState = { ...this.state };
+    newState.searchFilter = e.target.value;
+    this.setState(newState);
+
+    this.applyFilters();
+  }
+
+  applyFilters = (data) => {
+    data = data || this.state.data;
+
+    if (this.state.searchFilter){
+      let regex = new RegExp(this.state.searchFilter, 'i');
+      data = data.filter(item => {
+        return item.title.match(regex) || item.author.match(regex);
+      });
+    }
+    this.setState({ data: data });
   }
 
   render() {
@@ -71,10 +93,15 @@ class RecipeList extends Component {
       customRender: {
         image: {
           renderer: (item, props) => {
-            // TO-DO: display image
-            return (
-              <img className="img-circle" alt="" src="" />
-            )
+            if (item.image && item.image.data.data){
+              let base64Data = new Buffer(item.image.data.data, 'binary').toString('base64');
+              return (
+                <div className="list-image-container">
+                  <img className="" alt={ item.title } src={ `data:image/png;base64,${base64Data}` } />
+                </div>
+              )
+            }
+            return null;
           },
           className: 'table-image'
         },
@@ -99,7 +126,23 @@ class RecipeList extends Component {
     return (
       <div className="main-content">
         <div className="recipes">
-          <h2>Recipes</h2>
+          
+          <div className="search-field">
+            <div className="form-group">
+              <label className="control-label">Search:</label>
+              <div>
+                <input
+                  className="form-control"
+                  type="text"
+                  name="search"
+                  placeholder="Search by name or author"
+                  value={ this.state.searchFilter }
+                  onChange={ this.updateFilter }
+                />
+              </div>
+            </div>
+          </div>
+
           <Table { ...tableProps } />
         </div>
       </div>

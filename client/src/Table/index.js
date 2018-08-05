@@ -13,7 +13,7 @@ const Table = (props) => {
         )
       }
       return (
-        <td className={ props.cellClassName }>
+        <td className={ props.cellClassName } key={ key }>
           { item[props.dataKeys[i]] }
         </td>
       )
