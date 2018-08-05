@@ -45,7 +45,7 @@ In Progress...
   	"1 egg", "2 1/4 cups all-purpose flour", 
   	"1 teaspoon baking soda", 
   	"1/2 teaspoon salt", 
-  	"1 package (12 onces) semisweet chocolate chips (2 cups)"
+  	"1 package (12 ounces) semisweet chocolate chips (2 cups)"
   ],
   "instructions": [
 		"Heat oven to 375ºF", 
