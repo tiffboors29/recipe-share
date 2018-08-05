@@ -29,4 +29,49 @@ Router.get('/recipes/:id', (req, res) => {
   });
 });
 
+// create new recipe
+Router.post('/recipes', (req, res) => {
+  const recipe = new Recipe();
+  const errorMsg = getInvalidRecipeMsg(req.body);
+  const { author, authorId, title, servings, prep, 
+    time, ingredients, instructions } = req.body;
+
+  if (errorMsg){
+    return res.json({
+      success: false,
+      error: errorMsg
+    });
+  }
+
+  recipe.author = author;
+  recipe.authorId = authorId;
+  recipe.title = title;
+  recipe.servings = servings;
+  recipe.prep = prep;
+  recipe.time = time;
+  recipe.ingredients = ingredients;
+  recipe.instructions = instructions;
+  recipe.save((err, recipe) => {
+    if (err) return res.json({ success: false, error: err });
+    return res.json({ success: true, data: recipe });
+  });
+});
+
+
+// helper method to validate recipe object
+function getInvalidRecipeMsg (data){
+  const { authorId, author, title, servings, prep, 
+    time, ingredients, instructions } = data;
+  let errors = [];
+  if (!authorId || !author) errors.push('an author')
+  if (!title) errors.push('a title')
+  if (!servings) errors.push('servings')
+  if (!prep) errors.push('prep time')
+  if (!time) errors.push('full time')
+  if (!ingredients) errors.push('ingredients')
+  if (!instructions) errors.push('instructions')
+
+  return errors.length ? `You must provide ${errors.join(", ")}.` : false;
+}
+
 export default Router;
