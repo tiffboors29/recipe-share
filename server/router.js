@@ -2,11 +2,18 @@ import express from 'express';
 import logger from 'morgan';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import multer from 'multer';
 
 import { getSecret } from './secrets';
 import Recipe from './schema/recipe';
 
 const Router = express.Router();
+
+// store uploaded images locally
+var fs = require('fs');
+let upload = multer({ dest: 'public/images/uploads',
+  rename: (fieldname, filename) => filename + '-' + Date.now()
+});
 
 // set the routes path & initialize the API
 Router.get('/', (req, res) => {
@@ -54,6 +61,23 @@ Router.post('/recipes', (req, res) => {
   recipe.save((err, recipe) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: recipe });
+  });
+});
+
+// update recipe with uploaded image
+Router.put('/recipes/:id', upload.single('file'), (req, res) => {
+  Recipe.findById(req.params.id, (err, recipe) => {
+    if (err) return res.json({ success: false, error: err });
+    if (!recipe) return res.json({ success: false, error: 'Could not load recipe' });
+
+    recipe.image = {
+      data: fs.readFileSync(req.file.path),
+      contentType: 'image/png'
+    };
+    recipe.save(err => {
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true });
+    });
   });
 });
 
