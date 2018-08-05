@@ -4,25 +4,8 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
 import { getSecret } from './secrets';
+import Recipe from './schema/recipe';
 
-// mongoose.schema
-const Schema = mongoose.Schema;
-const RecipesSchema = new Schema({
-  authorId: String,
-  author: String,
-  title: String,
-  image: {
-    data: Buffer,
-    contentType: String
-  },
-  servings: Number,
-  prep: Number,
-  time: Number,
-  ingredients: Array,
-  instructions: Array
-}, { timestamps: true });
-
-const Recipe = mongoose.model('Recipe', RecipesSchema);
 const Router = express.Router();
 
 // set the routes path & initialize the API

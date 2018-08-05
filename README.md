@@ -1,12 +1,12 @@
 This is a simple Recipe Sharing App built with the MERN ([MongoDB](https://www.mongodb.com/), [Express](https://expressjs.com/), [React](https://reactjs.org/), [Node](https://nodejs.org/)) stack.
 
-User account access and authentication services is provided through [Auth0](https://auth0.com) integration.
+User account access and authentication services are provided through [Auth0](https://auth0.com) integration.
 
 ## Frontend
 In Progress...
 
 ## Backend
-In Progress...
+The server utilizes Express framework and MongoDB for data storage. [Body Parser](https://github.com/expressjs/body-parser#readme) is used as a helper in parsing network requests and [Morgan](https://github.com/expressjs/morgan) is HTTP request middleware used for logging/debugging those requests. [Mongoose](http://mongoosejs.com/) is used for MongoDB interaction. [Nodemon](https://github.com/remy/nodemon) is used to monitor and restart the server as changes are made.
 
 ### Data Model
 ##### User
