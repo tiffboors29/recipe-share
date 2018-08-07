@@ -13,9 +13,9 @@ const Header = (props) => {
 		return (
 			<ul className="nav navbar-nav navbar-right">
         <li>
-        	<a className="signin-button login" href={ actionBtn.path }>
-        		{ actionBtn.text }
-        	</a>
+        	<button className="signin-button login" onClick={ actionBtn.onClick }>
+						{ actionBtn.text }
+					</button>
         </li>
       </ul>
      )

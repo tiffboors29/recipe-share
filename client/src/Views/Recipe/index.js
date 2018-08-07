@@ -31,7 +31,7 @@ class Recipe extends Component {
     }
 
     return (
-      <div className="main-content">
+      <div className="main">
         <div className="recipe">
           <h2>{ recipe.title }</h2>
 

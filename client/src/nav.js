@@ -1,7 +1,11 @@
 const nav = [
   {
-    name: 'All Recipes',
+    name: 'Home',
     path: '/'
+  },
+  {
+    name: 'All Recipes',
+    path: '/recipes'
   },
   {
     name: 'My Recipes',

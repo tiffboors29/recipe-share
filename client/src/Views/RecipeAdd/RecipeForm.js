@@ -2,7 +2,7 @@ import React from 'react';
 import 'whatwg-fetch';
 import PropTypes from 'prop-types';
 
-import { ListInput } from './ListInput';
+import { ListInput } from '../../Components/ListInput';
 
 const RecipeForm = (props) => {
 
@@ -15,7 +15,7 @@ const RecipeForm = (props) => {
 
   return (
     <form className="form-horizontal col-xs-10 col-xs-offset-1" onSubmit={ props.handleSubmit }>
-      
+
       <div className="form-group">
         <label className="col-xs-3 control-label">Title</label>
         <div className="col-xs-9">

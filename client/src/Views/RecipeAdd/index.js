@@ -55,7 +55,7 @@ class RecipeAdd extends Component {
   submitImage = (id) => {
     let imageData = this.state.imageData;
 
-    fetch(`/api/recipes/${id}`, {
+    fetch(`/recipes/${id}`, {
       method: 'PUT',
       body: imageData
     }).then((res) => {
@@ -78,7 +78,7 @@ class RecipeAdd extends Component {
       return;
     }
 
-    fetch('/api/recipes', {
+    fetch('/recipes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ author, authorId, title, servings, 
@@ -94,22 +94,24 @@ class RecipeAdd extends Component {
 
   render() {
     return (
-      <div className="create-recipe-container">
+      <div className="main">
+        <div className="create-recipe-container">
 
-        <RecipeForm 
-          title={ this.state.title } 
-          servings={ this.state.servings }
-          prep={ this.state.prep }
-          time={ this.state.time }
-          ingredients={ this.state.ingredients }
-          instructions={ this.state.instructions }
-          image={ this.state.image }
-          handleChangeValue={ this.onChangeValue }
-          handleChangeList={ this.onChangeList }
-          handleChangeImage={ this.onChangeImage }
-          handleSubmit={ this.submitRecipe } />
+          <RecipeForm 
+            title={ this.state.title } 
+            servings={ this.state.servings }
+            prep={ this.state.prep }
+            time={ this.state.time }
+            ingredients={ this.state.ingredients }
+            instructions={ this.state.instructions }
+            image={ this.state.image }
+            handleChangeValue={ this.onChangeValue }
+            handleChangeList={ this.onChangeList }
+            handleChangeImage={ this.onChangeImage }
+            handleSubmit={ this.submitRecipe } />
 
-        { this.state.error && <p className="recipe-form-errors">{this.state.error}</p> }
+          { this.state.error && <p className="recipe-form-errors">{this.state.error}</p> }
+        </div>
       </div>
     );
   }

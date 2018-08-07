@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'whatwg-fetch';
 import moment from 'moment';
 
-import { Table } from './Table';
+import { Table } from '../../Components/Table';
 
 const columns = [
   {
@@ -53,7 +53,7 @@ class RecipeList extends Component {
   }
 
   loadRecipesFromServer = () => {
-    fetch('/api/recipes/')
+    fetch('/recipes/')
       .then(data => data.json())
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
@@ -124,7 +124,7 @@ class RecipeList extends Component {
     };
 
     return (
-      <div className="main-content">
+      <div className="main">
         <div className="recipes">
           
           <div className="search-field">
