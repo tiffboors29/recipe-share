@@ -1,36 +1,11 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 import moment from 'moment';
 
 import { Table } from '../../Components/Table';
 
-const columns = [
-  {
-    width: '20%',
-    data: 'picture',
-    name: ''
-  },
-  {
-    width: '20%',
-    data: 'name',
-    name: 'Title'
-  },
-  {
-    width: '20%',
-    data: 'name',
-    name: 'Total Time'
-  },
-  {
-    width: '20%',
-    data: 'name',
-    name: 'Author'
-  },
-  {
-    width: '20%',
-    data: 'name',
-    name: 'Date Created'
-  }
-];
+import { fetchRecipes } from '../../services';
+
+import columns from './columns';
 
 class RecipeList extends Component {
   constructor() {
@@ -41,6 +16,16 @@ class RecipeList extends Component {
   }
 
   componentDidMount() {
+    const { userProfile, getProfile } = this.props.auth;
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ author: profile.nickname || profile.name, authorId: profile.sub });
+      });
+    } else {
+      this.setState({ author: userProfile.nickname || userProfile.name, authorId: userProfile.sub });
+    }
+
+
     this.loadRecipesFromServer();
     if (!this.pollInterval) {
       this.pollInterval = setInterval(this.loadRecipesFromServer, 2000);
@@ -53,8 +38,9 @@ class RecipeList extends Component {
   }
 
   loadRecipesFromServer = () => {
-    fetch('/recipes/')
-      .then(data => data.json())
+    let id = this.props.author && this.state.authorId;
+    if (!id && this.props.author) return;
+    fetchRecipes(id)
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
         else this.applyFilters(res.data);
@@ -78,6 +64,7 @@ class RecipeList extends Component {
         return item.title.match(regex) || item.author.match(regex);
       });
     }
+
     this.setState({ data: data });
   }
 

@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import loading from './loading.svg';
+import Auth from '../../Auth/Auth';
+
+const auth = new Auth();
 
 class Callback extends Component {
+  componentDidMount() {
+    auth.setSession();
+  }
+
   render() {
     const style = {
       position: 'absolute',

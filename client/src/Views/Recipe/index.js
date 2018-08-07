@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
+
+import { fetchRecipes } from '../../services';
 
 class Recipe extends Component {
   constructor() {
@@ -12,8 +13,7 @@ class Recipe extends Component {
   }
 
   loadRecipeFromServer = (id) => {
-    fetch(`/api/recipes/${id}`)
-      .then(data => data.json())
+    fetchRecipes(null, id)
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
         else this.setState({ data: res.data });

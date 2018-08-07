@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Router } from 'react-router-dom';
+import { Route, Router, Redirect } from 'react-router-dom';
 
 import App from './App';
 import Auth from './Auth/Auth';
@@ -28,14 +28,43 @@ export const makeRoutes = () => {
         <div>
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
           <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
+          
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
             return <Callback {...props} /> 
           }}/>
 
-          <Route path="/recipes" component={ RecipeList }/>
-          <Route path="/recipes/:id" component={ Recipe }/>
-          <Route path="/add-recipe" component={ RecipeAdd }/>
+          <Route path="/my-recipes" render={(props) => (
+            !auth.isAuthenticated() ? (
+              <Redirect to="/home"/>
+            ) : (
+              <RecipeList auth={auth} author={true} {...props} />
+            )
+          )} />
+
+          <Route exact path="/recipes" render={(props) => (
+            !auth.isAuthenticated() ? (
+              <Redirect to="/home"/>
+            ) : (
+              <RecipeList auth={auth} {...props} />
+            )
+          )} />
+
+          <Route path="/recipes/:id" render={(props) => (
+            !auth.isAuthenticated() ? (
+              <Redirect to="/home"/>
+            ) : (
+              <Recipe auth={auth} {...props} />
+            )
+          )} />
+
+          <Route path="/add-recipe" render={(props) => (
+            !auth.isAuthenticated() ? (
+              <Redirect to="/home"/>
+            ) : (
+              <RecipeAdd auth={auth} {...props} />
+            )
+          )} />
 
           <Footer>{ iconCredit }</Footer>
         </div>

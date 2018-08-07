@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 
 import { RecipeForm } from './RecipeForm';
 
-const defaultState = {
-  "author": "Tiff", // TO-DO: remove
-  "authorId": "1",  // TO-DO: remove
-}
+import { createRecipe, uploadRecipeImage } from '../../services';
 
 class RecipeAdd extends Component {
   constructor() {
     super();
-    this.state = defaultState;
+    this.state = {};
+  }
+
+  componentWillMount() {
+    const { userProfile, getProfile } = this.props.auth;
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ author: profile.nickname || profile.name, authorId: profile.sub });
+      });
+    } else {
+      this.setState({ author: userProfile.nickname || userProfile.name, authorId: userProfile.sub });
+    }
   }
 
   onChangeValue = (e) => {
@@ -53,15 +60,10 @@ class RecipeAdd extends Component {
   }
 
   submitImage = (id) => {
-    let imageData = this.state.imageData;
-
-    fetch(`/recipes/${id}`, {
-      method: 'PUT',
-      body: imageData
-    }).then((res) => {
-      if (!res.ok) this.setState({ error: res.error ? res.error.message : res.error });
+    uploadRecipeImage(id, this.state.imageData).then((res) => {
+      if (!res.success) this.setState({ error: res.error ? res.error.message : res.error });
       else {
-        this.setState(defaultState);
+        this.setState({ author: this.state.author , authorId: this.state.authorId });
         window.location = '/';
       }
     });
@@ -78,12 +80,9 @@ class RecipeAdd extends Component {
       return;
     }
 
-    fetch('/recipes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ author, authorId, title, servings, 
-        prep, time, ingredients, instructions })
-    }).then(res => res.json()).then((res) => {
+    let body = JSON.stringify({ author, authorId, title, servings, 
+        prep, time, ingredients, instructions });
+    createRecipe(body).then((res) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
       else {
         this.submitImage(res.data._id);
@@ -93,6 +92,7 @@ class RecipeAdd extends Component {
   }
 
   render() {
+
     return (
       <div className="main">
         <div className="create-recipe-container">
