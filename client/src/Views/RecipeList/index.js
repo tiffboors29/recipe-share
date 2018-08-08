@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import { Table } from '../../Components/Table';
-
-import { fetchRecipes } from '../../services';
-
+import { Loading } from '../../Components/Loading';
+import { fetchRecipes } from '../../Services/Recipes'
 import columns from './columns';
 
 class RecipeList extends Component {
@@ -38,12 +37,14 @@ class RecipeList extends Component {
   }
 
   loadRecipesFromServer = () => {
+    this.setState({ isFetching: true });
     let id = this.props.author && this.state.authorId;
     if (!id && this.props.author) return;
     fetchRecipes(id)
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
         else this.applyFilters(res.data);
+        this.setState({ isFetching: false });
       });
   }
 
@@ -109,7 +110,7 @@ class RecipeList extends Component {
         }
       }
     };
-
+    
     return (
       <div className="main">
         <div className="recipes">
@@ -129,8 +130,12 @@ class RecipeList extends Component {
               </div>
             </div>
           </div>
-
-          <Table { ...tableProps } />
+          {
+            this.state.isFetching && !this.state.data ?
+              <Loading /> 
+              :
+              <Table { ...tableProps } />
+          }
         </div>
       </div>
     );

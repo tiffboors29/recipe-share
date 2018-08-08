@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Router, Redirect } from 'react-router-dom';
 
 import App from './App';
-import Auth from './Auth/Auth';
+import Auth from './Util/Auth';
 import history from './history';
 
 import { Home } from './Views/Home';
@@ -27,7 +27,14 @@ export const makeRoutes = () => {
       <Router history={history}>
         <div>
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
-          <Route path="/home" render={(props) => <Home auth={auth} {...props} />} />
+          <Route path="/" render={(props) => <Home auth={auth} {...props} />} />
+          <Route exact path="/" render={(props) => (
+            !auth.isAuthenticated() ? (
+              <Redirect to="/"/>
+            ) : (
+              <RecipeList auth={auth} {...props} />
+            )
+          )} />
           
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
@@ -36,23 +43,16 @@ export const makeRoutes = () => {
 
           <Route path="/my-recipes" render={(props) => (
             !auth.isAuthenticated() ? (
-              <Redirect to="/home"/>
+              <Redirect to="/"/>
             ) : (
               <RecipeList auth={auth} author={true} {...props} />
             )
           )} />
 
-          <Route exact path="/recipes" render={(props) => (
-            !auth.isAuthenticated() ? (
-              <Redirect to="/home"/>
-            ) : (
-              <RecipeList auth={auth} {...props} />
-            )
-          )} />
 
           <Route path="/recipes/:id" render={(props) => (
             !auth.isAuthenticated() ? (
-              <Redirect to="/home"/>
+              <Redirect to="/"/>
             ) : (
               <Recipe auth={auth} {...props} />
             )
@@ -60,7 +60,7 @@ export const makeRoutes = () => {
 
           <Route path="/add-recipe" render={(props) => (
             !auth.isAuthenticated() ? (
-              <Redirect to="/home"/>
+              <Redirect to="/"/>
             ) : (
               <RecipeAdd auth={auth} {...props} />
             )

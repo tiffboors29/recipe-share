@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { nav } from './nav';
-import { Header } from './Components/Header';
+import { navigation } from './navigation';
+import { Nav } from './Components/Nav';
 
 class App extends Component {
 
@@ -23,11 +23,13 @@ class App extends Component {
 
     return (
       <div>
-        <Header
-          nav={ nav }
-          actionBtn={ loginBtn }
-          title="What's Cookin"
-          />
+        <header className="site-header">
+          <Nav
+            nav={ navigation }
+            actionBtn={ loginBtn }
+            title="What's Cookin"
+            />
+        </header>
       </div>
     );
 

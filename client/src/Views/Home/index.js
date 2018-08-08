@@ -9,13 +9,6 @@ class Home extends Component {
     return (
       <div className="container">
         {
-          isAuthenticated() && (
-              <h4>
-                You are logged in!
-              </h4>
-            )
-        }
-        {
           !isAuthenticated() && (
               <h4>
                 You are not logged in! Please{' '}

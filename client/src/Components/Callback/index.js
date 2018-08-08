@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import loading from './loading.svg';
-import Auth from '../../Auth/Auth';
+import Auth from '../../Util/Auth';
 
 const auth = new Auth();
 

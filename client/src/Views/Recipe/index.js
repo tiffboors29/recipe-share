@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { fetchRecipes } from '../../services';
+import { fetchRecipes } from '../../Services/Recipes';
 
 class Recipe extends Component {
   constructor() {

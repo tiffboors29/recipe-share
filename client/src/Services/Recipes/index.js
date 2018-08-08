@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import Auth from './Auth/Auth';
-import { API_URL } from './constants';
+import Auth from '../../Util/Auth';
+import { API_URL } from '../../Util/constants';
 
 const auth = new Auth();
 
@@ -10,10 +10,6 @@ const headers = { 'Authorization': `Bearer ${getAccessToken()}`}
 
 const handleData = response => response.data
 
-export const ping = (secured) => {
-  if (secured) return axios.get(`${API_URL}/private?scope=read:recipes`, { headers }).then(handleData)
-  return axios.get(`${API_URL}/public`).then(handleData);
-}
 
 export const fetchRecipes = (authorId, recipeId) => {
   if (authorId) return axios.get(`${API_URL}/recipes?authorId=${authorId}`, { headers }).then(handleData);

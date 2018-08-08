@@ -1,11 +1,7 @@
-const nav = [
-  {
-    name: 'Home',
-    path: '/'
-  },
+const navigation = [
   {
     name: 'All Recipes',
-    path: '/recipes'
+    path: '/'
   },
   {
     name: 'My Recipes',
@@ -17,4 +13,4 @@ const nav = [
   }
 ];
 
-export { nav };
+export { navigation };

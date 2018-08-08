@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
+import { createRecipe, uploadRecipeImage } from '../../Services/Recipes';
 import { RecipeForm } from './RecipeForm';
-
-import { createRecipe, uploadRecipeImage } from '../../services';
 
 class RecipeAdd extends Component {
   constructor() {
