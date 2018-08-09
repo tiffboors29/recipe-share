@@ -18,13 +18,13 @@ router.get('/', (req, res) => {
 });
 
 // get all recipes
-router.get('/recipes', checkJwt, checkScopes, (req, res) => {
+router.get('/recipes', (req, res) => {
   let authorId = req.query.authorId;
   if (authorId){
     Recipe.find({ 'authorId': authorId }, (err, recipe) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true, data: recipe });
-  });
+      if (err) return res.json({ success: false, error: err });
+      return res.json({ success: true, data: recipe });
+    });
   }
   else {
     Recipe.find((err, recipes) => {
@@ -36,7 +36,7 @@ router.get('/recipes', checkJwt, checkScopes, (req, res) => {
 
 
 // get recipe by id
-router.get('/recipes/:id', checkJwt, checkScopes, (req, res) => {
+router.get('/recipes/:id', (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: recipe });

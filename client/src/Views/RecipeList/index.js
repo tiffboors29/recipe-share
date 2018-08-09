@@ -18,7 +18,7 @@ class RecipeList extends Component {
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
-        this.setState({ author: profile.nickname || profile.name, authorId: profile.sub });
+        if (profile) this.setState({ author: profile.nickname || profile.name, authorId: profile.sub });
       });
     } else {
       this.setState({ author: userProfile.nickname || userProfile.name, authorId: userProfile.sub });

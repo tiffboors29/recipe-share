@@ -27,14 +27,8 @@ export const makeRoutes = () => {
       <Router history={history}>
         <div>
           <Route path="/" render={(props) => <App auth={auth} {...props} />} />
-          <Route path="/" render={(props) => <Home auth={auth} {...props} />} />
-          <Route exact path="/" render={(props) => (
-            !auth.isAuthenticated() ? (
-              <Redirect to="/"/>
-            ) : (
-              <RecipeList auth={auth} {...props} />
-            )
-          )} />
+          <Route path="/login" render={(props) => <Home auth={auth} {...props} />} />
+          <Route exact path="/" render={(props) => <RecipeList auth={auth} {...props} />} />
           
           <Route path="/callback" render={(props) => {
             handleAuthentication(props);
@@ -43,24 +37,18 @@ export const makeRoutes = () => {
 
           <Route path="/my-recipes" render={(props) => (
             !auth.isAuthenticated() ? (
-              <Redirect to="/"/>
+              <Redirect to="/login"/>
             ) : (
               <RecipeList auth={auth} author={true} {...props} />
             )
           )} />
 
 
-          <Route path="/recipes/:id" render={(props) => (
-            !auth.isAuthenticated() ? (
-              <Redirect to="/"/>
-            ) : (
-              <Recipe auth={auth} {...props} />
-            )
-          )} />
+          <Route path="/recipes/:id" render={(props) => <Recipe auth={auth} {...props} />} />
 
           <Route path="/add-recipe" render={(props) => (
             !auth.isAuthenticated() ? (
-              <Redirect to="/"/>
+              <Redirect to="/login"/>
             ) : (
               <RecipeAdd auth={auth} {...props} />
             )

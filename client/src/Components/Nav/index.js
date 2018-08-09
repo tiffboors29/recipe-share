@@ -32,7 +32,7 @@ const Nav = (props) => {
 	        	<span className="icon-bar"></span>
 	        </button>
 	        <a href="/">
-	        	<h1 className="brand-logo"></h1>
+	        	<h1 className="brand-logo">{ props.title }</h1>
 	        </a>
     		</div>
 
