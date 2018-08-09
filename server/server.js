@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 
 const checkJwt = require('./authenticate').checkJwt;
 const checkScopes = require('./authenticate').checkScopes;
@@ -33,6 +34,11 @@ mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
+const staticFiles = express.static(path.join(__dirname, '../../client/build'))
+app.use(staticFiles)
+
+// any routes not picked up by the server api will be handled by the react router
+app.use('/*', staticFiles)
 
 app.get('/public', function(req, res) {
   res.json({
