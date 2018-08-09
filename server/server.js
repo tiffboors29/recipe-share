@@ -22,7 +22,7 @@ if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
 app.use(cors());
 
 // set port
-const API_PORT = process.env.API_PORT || 3001;
+const API_PORT = process.env.PORT || 3001;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // configure the db
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 

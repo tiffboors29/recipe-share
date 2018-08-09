@@ -1,0 +1,16 @@
+
+node_modules
+server/public/images/uploads
+
+node_modules/
+
+.env
+coverage
+build
+
+# misc
+.DS_Store
+.yarnclean
+npm-debug.log
+yarn-error.log
+*.rdb
