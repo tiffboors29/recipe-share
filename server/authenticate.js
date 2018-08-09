@@ -1,12 +1,11 @@
-import jwt from 'express-jwt';
-import jwtAuthz from 'express-jwt-authz';
-import jwksRsa from 'jwks-rsa';
-
-import dotenv from 'dotenv';
+const jwt = require('express-jwt');
+const jwtAuthz = require('express-jwt-authz');
+const jwksRsa = require('jwks-rsa');
+const dotenv = require('dotenv');
 
 dotenv.load();
 
-export const checkJwt = jwt({
+const checkJwt = jwt({
 	secret: jwksRsa.expressJwtSecret({
     cache: true,
     rateLimit: true,
@@ -19,6 +18,7 @@ export const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
-export const checkScopes = jwtAuthz([ 'read:recipes', 'create:recipes' ]);
+const checkScopes = jwtAuthz([ 'read:recipes', 'create:recipes' ]);
 
+module.exports = { checkJwt, checkScopes}
 

@@ -1,13 +1,14 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import logger from 'morgan';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import dotenv from 'dotenv';
+const express = require('express');
+const mongoose = require('mongoose');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
+const dotenv = require('dotenv');
 
-import { checkJwt, checkScopes } from './authenticate';
-import routes from './routes';
+const checkJwt = require('./authenticate').checkJwt;
+const checkScopes = require('./authenticate').checkScopes;
+const routes = require('./routes');
 
 const app = express();
 
@@ -17,11 +18,7 @@ if (!process.env.AUTH0_DOMAIN || !process.env.AUTH0_AUDIENCE) {
   throw 'Make sure you have AUTH0_DOMAIN, and AUTH0_AUDIENCE in your .env file';
 }
 
-const corsOptions =  {
-  origin: 'http://localhost:3000'
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // set port
 const API_PORT = process.env.API_PORT || 3001;

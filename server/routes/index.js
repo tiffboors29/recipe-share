@@ -1,9 +1,9 @@
-import express from 'express';
-import multer from 'multer';
+const express = require('express');
+const multer = require('multer');
 
-import Recipe from '../schema/recipe';
-
-import { checkJwt, checkScopes } from '../authenticate';
+const Recipe = require('../schema/recipe');
+const checkJwt = require('../authenticate').checkJwt;
+const checkScopes = require('../authenticate').checkScopes;
 
 const router = express.Router();
 
@@ -105,4 +105,4 @@ function getInvalidRecipeMsg (data){
   return errors.length ? `You must provide ${errors.join(", ")}.` : false;
 }
 
-export default router;
+module.exports = router;
