@@ -13,9 +13,6 @@ let upload = multer({ dest: 'public/images/uploads',
   rename: (fieldname, filename) => filename + '-' + Date.now()
 });
 
-router.get('/', (req, res) => {
-  res.json({ message: 'API INIT'});
-});
 
 // get all recipes
 router.get('/recipes', (req, res) => {

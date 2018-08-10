@@ -37,22 +37,19 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 const staticFiles = express.static(path.join(__dirname, '../../client/build'))
 app.use(staticFiles)
 
-// any routes not picked up by the server api will be handled by the react router
-app.use('/*', staticFiles)
-
-app.get('/public', function(req, res) {
+app.get('/api/public', function(req, res) {
   res.json({
     message: 'Hello from a public endpoint! You don\'t need to be authenticated to see this.'
   });
 });
 
-app.get('/private', checkJwt, function(req, res) {
+app.get('/api/private', checkJwt, function(req, res) {
   res.json({
     message: 'Hello from a private endpoint! You need to be authenticated to see this.'
   });
 });
 
-app.get('/private-scoped', checkJwt, checkScopes, function(req, res) {
+app.get('/api/private-scoped', checkJwt, checkScopes, function(req, res) {
   res.json({
     message: 'Hello from a private endpoint! You need to be authenticated and have a scope of read:messages to see this.'
   });
@@ -65,7 +62,10 @@ app.use((err, req, res, next) => {
 });
 
 // use router configs when calling /api
-app.use('/', routes);
+app.use('/api', routes);
+
+// any routes not picked up by the server api will be handled by the react router
+app.use('/*', staticFiles)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
