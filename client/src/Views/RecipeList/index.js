@@ -27,7 +27,7 @@ class RecipeList extends Component {
 
     this.loadRecipesFromServer();
     if (!this.pollInterval) {
-      this.pollInterval = setInterval(this.loadRecipesFromServer, 2000);
+      this.pollInterval = setInterval(this.loadRecipesFromServer, 10000);
     }
   }
 
