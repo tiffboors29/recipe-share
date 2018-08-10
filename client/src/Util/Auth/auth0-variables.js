@@ -1,4 +1,5 @@
-const URL = process.env.PUBLIC_URL || 'http://localhost:5000';
+// const URL = process.env.PUBLIC_URL || 'http://localhost:5000';
+const URL = 'https://recipeshareapp.herokuapp.com';
 
 export const AUTH_CONFIG = {
   domain: 'whats-cookin.auth0.com',
