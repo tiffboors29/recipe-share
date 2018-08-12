@@ -74,7 +74,7 @@ footer {
   margin: 0 auto;
   text-align: center;
   overflow: hidden;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
   width: 45px;
   height: 45px;
 }
