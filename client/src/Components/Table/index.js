@@ -21,28 +21,31 @@ const Table = (props) => {
   }
 
   return (
-    <table className="table table-fixed">
-      <thead>
-        <tr>
+    <div>
+      <table className="table table-fixed">
+        <thead>
+          <tr>
+            {
+              (props.columns || []).map((col, i) =>
+                <th key={ `th${i}` } width={ col.width } data-column={ col.data }>
+                  { col.name }
+                </th>
+              )
+            }
+          </tr>
+        </thead>
+        <tbody>
           {
-            (props.columns || []).map((col, i) =>
-              <th key={ `th${i}` } width={ col.width } data-column={ col.data }>
-                { col.name }
-              </th>
+            (props.data || []).map(item =>
+              <tr key={ item._id }>
+                { renderRowData(item) }
+              </tr>
             )
           }
-        </tr>
-      </thead>
-      <tbody>
-        {
-          (props.data || []).map(item =>
-            <tr key={ item._id }>
-              { renderRowData(item) }
-            </tr>
-          )
-        }
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      { !(props.data || []).length && props.noDataMsg }
+    </div>
   );
 }
 

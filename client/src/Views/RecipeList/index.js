@@ -43,7 +43,10 @@ class RecipeList extends Component {
     fetchRecipes(id)
       .then((res) => {
         if (!res.success) this.setState({ error: res.error });
-        else this.applyFilters(res.data);
+        else {
+          this.applyFilters(res.data);
+          this.setState({ origData: res.data });
+        }
         this.setState({ isFetching: false });
       });
   }
@@ -57,7 +60,7 @@ class RecipeList extends Component {
   }
 
   applyFilters = (data) => {
-    data = data || this.state.data;
+    data = data || this.state.origData;
 
     if (this.state.searchFilter){
       let regex = new RegExp(this.state.searchFilter, 'i');
@@ -78,6 +81,7 @@ class RecipeList extends Component {
       data: this.state.data,
       fetchKey: '',
       cellClassName: 'text-truncate',
+      noDataMsg: 'There are no recipes for the given filter.',
       customRender: {
         image: {
           renderer: (item, props) => {
