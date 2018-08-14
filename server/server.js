@@ -7,8 +7,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 
-const checkJwt = require('./authenticate').checkJwt;
-const checkScopes = require('./authenticate').checkScopes;
+const checkJwt = require('./middleware/authenticate').checkJwt;
+const checkScopes = require('./middleware/authenticate').checkScopes;
 const routes = require('./routes');
 
 const app = express();

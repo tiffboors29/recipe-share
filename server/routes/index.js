@@ -2,8 +2,9 @@ const express = require('express');
 const multer = require('multer');
 
 const Recipe = require('../schema/recipe');
-const checkJwt = require('../authenticate').checkJwt;
-const checkScopes = require('../authenticate').checkScopes;
+const checkJwt = require('../middleware/authenticate').checkJwt;
+const checkScopes = require('../middleware/authenticate').checkScopes;
+const getInvalidRecipeMsg = require('../helpers').getInvalidRecipeMsg;
 
 const router = express.Router();
 
@@ -12,7 +13,6 @@ var fs = require('fs');
 let upload = multer({ dest: 'public/images/uploads',
   rename: (fieldname, filename) => filename + '-' + Date.now()
 });
-
 
 // get all recipes
 router.get('/recipes', (req, res) => {
@@ -31,7 +31,6 @@ router.get('/recipes', (req, res) => {
   }
 });
 
-
 // get recipe by id
 router.get('/recipes/:id', (req, res) => {
   Recipe.findById(req.params.id, (err, recipe) => {
@@ -43,10 +42,13 @@ router.get('/recipes/:id', (req, res) => {
 // create new recipe
 router.post('/recipes', checkJwt, checkScopes, (req, res) => {
   const recipe = new Recipe();
-  const errorMsg = getInvalidRecipeMsg(req.body);
+  let errorMsg = getInvalidRecipeMsg(req.body);
   const { author, authorId, title, servings, prep, 
     time, ingredients, instructions } = req.body;
 
+  if (!req.user !== authorId){
+    errorMsg = 'Invalid user';
+  }
   if (errorMsg){
     return res.json({
       success: false,
@@ -70,6 +72,9 @@ router.post('/recipes', checkJwt, checkScopes, (req, res) => {
 
 // update recipe with uploaded image
 router.put('/recipes/:id', checkJwt, checkScopes, upload.single('file'), (req, res) => {
+  if (!req.user !== authorId){
+    return res.json({ success: false, error: 'Invalid user' });
+  }
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) return res.json({ success: false, error: err });
     if (!recipe) return res.json({ success: false, error: 'Could not load recipe' });
@@ -85,21 +90,5 @@ router.put('/recipes/:id', checkJwt, checkScopes, upload.single('file'), (req, r
   });
 });
 
-
-// helper method to validate recipe object
-function getInvalidRecipeMsg (data){
-  const { authorId, author, title, servings, prep, 
-    time, ingredients, instructions } = data;
-  let errors = [];
-  if (!authorId || !author) errors.push('an author')
-  if (!title) errors.push('a title')
-  if (!servings) errors.push('servings')
-  if (!prep) errors.push('prep time')
-  if (!time) errors.push('total time')
-  if (!ingredients) errors.push('ingredients')
-  if (!instructions) errors.push('instructions')
-
-  return errors.length ? `You must provide ${errors.join(", ")}.` : false;
-}
 
 module.exports = router;
