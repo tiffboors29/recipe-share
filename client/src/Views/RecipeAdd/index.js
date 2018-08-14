@@ -4,13 +4,11 @@ import { createRecipe, uploadRecipeImage } from '../../Services/Recipes';
 import { RecipeForm } from './RecipeForm';
 
 class RecipeAdd extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {};
-  }
 
-  componentWillMount() {
-    const { userProfile, getProfile } = this.props.auth;
+    const { userProfile, getProfile } = props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ author: profile.nickname || profile.name, authorId: profile.sub });
