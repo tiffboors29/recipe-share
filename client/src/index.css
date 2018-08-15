@@ -29,6 +29,11 @@ header {
   font-size: 12px;
 }
 
+.signin-button:focus {
+  box-shadow: 0 0 3pt 2pt #bbeaf3;
+  outline: 0;
+}
+
 footer {
   padding: 5px !important;
   background: #bbeaf3 !important;
