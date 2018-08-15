@@ -45,8 +45,7 @@ router.post('/recipes', checkJwt, checkScopes, (req, res) => {
   let errorMsg = getInvalidRecipeMsg(req.body);
   const { author, authorId, title, servings, prep, 
     time, ingredients, instructions } = req.body;
-
-  if (!req.user !== authorId){
+  if (!req.user.sub || req.user.sub !== authorId){
     errorMsg = 'Invalid user';
   }
   if (errorMsg){
@@ -72,9 +71,6 @@ router.post('/recipes', checkJwt, checkScopes, (req, res) => {
 
 // update recipe with uploaded image
 router.put('/recipes/:id', checkJwt, checkScopes, upload.single('file'), (req, res) => {
-  if (!req.user !== authorId){
-    return res.json({ success: false, error: 'Invalid user' });
-  }
   Recipe.findById(req.params.id, (err, recipe) => {
     if (err) return res.json({ success: false, error: err });
     if (!recipe) return res.json({ success: false, error: 'Could not load recipe' });
